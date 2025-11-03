@@ -171,23 +171,24 @@
             padding: 20px;
         }
         
+        /* RESTORING HERO ANIMATIONS */
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            animation: fadeInDown 1s ease;
+            animation: fadeInDown 1s ease; /* RESTORED */
         }
         
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.3s both;
+            animation: fadeInUp 1s ease 0.3s both; /* RESTORED */
         }
         
         .hero-btns {
             display: flex;
             justify-content: center;
             gap: 20px;
-            animation: fadeInUp 1s ease 0.6s both;
+            animation: fadeInUp 1s ease 0.6s both; /* RESTORED */
         }
         
         /* Stats Section */
@@ -227,6 +228,7 @@
             gap: 30px;
         }
         
+        /* REMOVING DEFAULT ANIMATION, SETTING INITIAL INVISIBLE STATE (For on-scroll animation) */
         .stat-card {
             background: white;
             border-radius: 10px;
@@ -236,7 +238,15 @@
             flex: 1;
             min-width: 250px;
             transition: var(--transition);
-            animation: fadeInUp 0.8s ease;
+            opacity: 0; /* Start invisible */
+            transform: translateY(30px); /* Start below final position (for fadeInUp) */
+            transition: opacity 0.8s ease, transform 0.8s ease; /* Transition for animation effect */
+            /* Removed: animation: fadeInUp 0.8s ease; */ 
+        }
+
+        .stat-card.animated { /* Class added on scroll */
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .stat-card:hover {
@@ -274,9 +284,18 @@
             gap: 50px;
         }
         
+        /* REMOVING DEFAULT ANIMATION, SETTING INITIAL INVISIBLE STATE */
         .about-text {
             flex: 1;
-            animation: fadeInLeft 1s ease;
+            opacity: 0;
+            transform: translateX(-30px); /* Start left (for fadeInLeft) */
+            transition: opacity 1s ease, transform 1s ease;
+            /* Removed: animation: fadeInLeft 1s ease; */
+        }
+
+        .about-text.animated { /* Class added on scroll */
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .about-text h2 {
@@ -289,12 +308,21 @@
             font-size: 1.1rem;
         }
         
+        /* REMOVING DEFAULT ANIMATION, SETTING INITIAL INVISIBLE STATE */
         .about-image {
             flex: 1;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            animation: fadeInRight 1s ease;
+            opacity: 0;
+            transform: translateX(30px); /* Start right (for fadeInRight) */
+            transition: opacity 1s ease, transform 1s ease;
+            /* Removed: animation: fadeInRight 1s ease; */
+        }
+
+        .about-image.animated { /* Class added on scroll */
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .about-image img {
@@ -320,13 +348,22 @@
             gap: 30px;
         }
         
+        /* REMOVING DEFAULT ANIMATION, SETTING INITIAL INVISIBLE STATE */
         .program-card {
             background: white;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: var(--transition);
-            animation: fadeInUp 0.8s ease;
+            opacity: 0; /* Start invisible */
+            transform: translateY(30px); /* Start below (for fadeInUp) */
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            /* Removed: animation: fadeInUp 0.8s ease; */
+        }
+
+        .program-card.animated { /* Class added on scroll */
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .program-card:hover {
@@ -382,13 +419,20 @@
             margin: 0 auto;
         }
         
+        /* REMOVING DEFAULT ANIMATION, SETTING INITIAL INVISIBLE STATE */
         .testimonial {
             padding: 30px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             margin: 20px;
             backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease;
+            opacity: 0;
+            transition: opacity 1s ease;
+            /* Removed: animation: fadeIn 1s ease; */
+        }
+
+        .testimonial.animated { /* Class added on scroll */
+            opacity: 1;
         }
         
         .testimonial p {
@@ -413,9 +457,18 @@
             gap: 50px;
         }
         
+        /* REMOVING DEFAULT ANIMATION, SETTING INITIAL INVISIBLE STATE */
         .contact-info {
             flex: 1;
-            animation: fadeInLeft 1s ease;
+            opacity: 0;
+            transform: translateX(-30px); /* Start left (for fadeInLeft) */
+            transition: opacity 1s ease, transform 1s ease;
+            /* Removed: animation: fadeInLeft 1s ease; */
+        }
+
+        .contact-info.animated { /* Class added on scroll */
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .contact-info h2 {
@@ -439,13 +492,22 @@
             margin-top: 5px;
         }
         
+        /* REMOVING DEFAULT ANIMATION, SETTING INITIAL INVISIBLE STATE */
         .contact-form {
             flex: 1;
             background: var(--light);
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            animation: fadeInRight 1s ease;
+            opacity: 0;
+            transform: translateX(30px); /* Start right (for fadeInRight) */
+            transition: opacity 1s ease, transform 1s ease;
+            /* Removed: animation: fadeInRight 1s ease; */
+        }
+
+        .contact-form.animated { /* Class added on scroll */
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .form-group {
@@ -562,7 +624,7 @@
             color: #aaa;
         }
         
-        /* Animations */
+        /* Animations - RESTORING KEYFRAMES FOR HERO SECTION */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -1026,12 +1088,15 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animated');
+                    // OPTIONAL: Stop observing once animated
+                    // observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
         
-        document.querySelectorAll('.stat-card, .program-card, .testimonial').forEach(card => {
-            observer.observe(card);
+        // ADD MORE ELEMENTS TO BE OBSERVED: About content and Contact forms
+        document.querySelectorAll('.stat-card, .program-card, .testimonial, .about-text, .about-image, .contact-info, .contact-form').forEach(element => {
+            observer.observe(element);
         });
     </script>
 </body>
